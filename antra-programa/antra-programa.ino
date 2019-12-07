@@ -72,9 +72,15 @@ bool readButton(button_t* btn) {
 }
 
 void setup() {
-
+	ledButton = newButton(ledButtonPin);
+	led = newLed(ledPin);
 }
 
 void loop() {
+	if (readButton(&ledButton)) {
+		led.targetState = (ledStates_t) !led.targetState;
+	}
 
+	updateLed(&led);
+	updateButton(&ledButton);
 }
