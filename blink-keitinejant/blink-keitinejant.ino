@@ -33,6 +33,21 @@ void ijungtiKitaLeda() {
 	Serial.println(kelintasIjungtas);
 }
 
+void pakeistiAutomatiskai() {
+	ijungtiKitaLeda();
+	delay(500);
+}
+
+void pakeistiSuMygtuku() {
+	mygtukoBusena = digitalRead(mygtukoPinas);
+
+	if (mygtukoBusena != dabartineBusena) {
+		ijungtiKitaLeda();
+		delay(200);
+		dabartineBusena = digitalRead(mygtukoPinas);
+	}
+}
+
 void setup() {
 	Serial.begin(9600);
 
@@ -45,13 +60,12 @@ void setup() {
 }
 
 void loop() {
-	mygtukoBusena = digitalRead(mygtukoPinas);
+	/**
+ 	 * pasirink 1 iš 2 funkcijų LED'o pakeitimui
+ 	*/
 
-	if (mygtukoBusena != dabartineBusena) {
-		ijungtiKitaLeda();
-		delay(200);
-		dabartineBusena = digitalRead(mygtukoPinas);
-	}
+	pakeistiAutomatiskai();
+	// pakeistiSuMygtuku();
 
 	delay(1);
 }
