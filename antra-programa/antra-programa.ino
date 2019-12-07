@@ -37,7 +37,7 @@ led_t newLed(int pinNum) {
 	return newLedTemp;
 }
 
-void updateLed(led_t *led) {
+void updateLed(led_t* led) {
 	if (led->currState != led->targetState) {
 		led->currState = led->targetState;
 		digitalWrite(led->pinNum, led->currState);
@@ -50,6 +50,25 @@ button_t newButton(int pinNum) {
 	pinMode(pinNum, INPUT);
 
 	return button;
+}
+
+void updateButton(button_t* btn) {
+	btn->prevState = btn->currState;
+	btn->currState = digitalRead(btn->pinNum);
+
+	if (
+		btn->prevState == buttonReleased
+		&& btn->currState == buttonPressed
+	) {
+		btn->pressed = true;
+	}
+}
+
+bool readButton(button_t* btn) {
+	bool tempPressed = btn->pressed;
+	btn->pressed = false;
+
+	return tempPressed;
 }
 
 void setup() {
