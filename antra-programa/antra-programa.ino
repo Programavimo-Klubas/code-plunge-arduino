@@ -1,11 +1,9 @@
-#define HW_PIN_OUTPUT 1
-#define HW_PIN_INPUT 0
+const bool buttonPressed = false;
+const bool buttonReleased = true;
+
 
 const byte ledButtonPin = 2;
 const byte ledPin = 3;
-
-bool buttonPressed = false;
-bool buttonReleased = true;
 
 typedef enum {
 	OFF = 0,
@@ -44,6 +42,14 @@ void updateLed(led_t *led) {
 		led->currState = led->targetState;
 		digitalWrite(led->pinNum, led->currState);
 	}
+}
+
+button_t newButton(int pinNum) {
+	button_t button = { pinNum, buttonReleased, buttonPressed, false };
+
+	pinMode(pinNum, INPUT);
+
+	return button;
 }
 
 void setup() {
